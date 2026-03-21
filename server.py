@@ -1,6 +1,8 @@
 import socket
-from api import apiHandler
-from error import errorHandler
+from handlers.api import apiHandler
+from handlers.error import errorHandler
+from handlers.static import staticHandler
+from handlers.site import siteHandler
 
 TCP_IP_LOCAL = "127.0.0.1"
 PORT = 5000
@@ -22,14 +24,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             dataDecoded = dataRaw.decode()
             requestMainData = dataDecoded.split("\r\n")[0].split(" ")
             requestType, requestPath, requestVersion = requestMainData[0:3]
-
             # if data recived, pass it to handlers
             if dataRaw:
-                match requestPath:
-                    case "/v1/api":
-                        apiHandler(requestType, requestPath, conn)
-                    case "/":
-                        print("")  # to be implemented
-                    case _:
-                        print("Server: Error with receving data")
-                        errorHandler(conn)
+                if requestPath.startswith("/v1/api"):
+                    apiHandler(requestType, requestPath, conn)
+                elif requestPath.startswith("/static/"):
+                    staticHandler(requestPath, conn)
+                elif requestPath.startswith("/"):
+                    siteHandler(conn)
+                else:
+                    print("Server: Error with receving data")
+                    errorHandler(conn)
