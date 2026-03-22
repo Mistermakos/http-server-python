@@ -1,4 +1,5 @@
 import os
+from httpResponse import httpResponse
 
 
 def siteHandler(conn):
@@ -8,8 +9,9 @@ def siteHandler(conn):
 
     data = filetosend.read(1024)
     while data:
-        print("Sending...")
-        conn.send("HTTP/1.1 200 OK\nContent-Type: text/html\n\n".encode())
+        print("Sending main site...")
+        res = httpResponse(200, "text/html")
+        res.send(conn)
         conn.sendall(data)
         data = filetosend.read(1024)
     filetosend.close()

@@ -18,19 +18,29 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     while True:
         conn, address = s.accept()
         with conn:
-            print("Server: Connected by:" + str(address))
             # reciving, decoding, taking important info
             dataRaw = conn.recv(1024)
             dataDecoded = dataRaw.decode()
             requestMainData = dataDecoded.split("\r\n")[0].split(" ")
             requestType, requestPath, requestVersion = requestMainData[0:3]
+            # Console report
+            print(
+                "Server: Connected by: "
+                + str(address)
+                + " Type: "
+                + requestType
+                + " Path: "
+                + requestPath
+            )
             # if data recived, pass it to handlers
             if dataRaw:
                 if requestPath.startswith("/v1/api"):
                     apiHandler(requestType, requestPath, conn)
                 elif requestPath.startswith("/static/"):
                     staticHandler(requestPath, conn)
-                elif requestPath.startswith("/"):
+                elif requestPath == "/favicon.ico":
+                    errorHandler(conn)
+                elif requestPath == ("/"):
                     siteHandler(conn)
                 else:
                     print("Server: Error with receving data")

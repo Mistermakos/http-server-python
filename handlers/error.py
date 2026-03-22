@@ -1,8 +1,8 @@
+from httpResponse import httpResponse
+
+
 def errorHandler(conn):
-    response = (
-        "HTTP/1.1 500 ERR\r\n"
-        "Content-Type: application/json\r\n"
-        "Connection: close\r\n"
-    )
-    print("Server: Responding Error")
-    conn.sendall(response.encode())
+    print("Server: Responding Error 404")
+    res = httpResponse(404, "application/json")
+    res.addConnection(0)
+    res.send(conn)
