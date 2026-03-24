@@ -34,7 +34,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             )
             # if data recived, pass it to handlers
             if dataRaw:
-                if requestPath.startswith("/v1/api"):
+                if requestPath.startswith("/api/v1"):
                     apiHandler(requestType, requestPath, conn)
                 elif requestPath.startswith("/static/"):
                     staticHandler(requestPath, conn)

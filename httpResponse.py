@@ -8,9 +8,9 @@ class httpResponse:
         if connection == 0:
             self.response += "Connection: close\r\n"
 
-    def addData(self, data):
-        self.response += f"Content-Length: {len(data.encode())}\r\n" "\r\n" f"{data}"
+    def addContentLength(self, data):
+        self.response += f"Content-Length: {len(data.encode())}\r\n"
 
     def send(self, conn):
-        self.response += "\r\n\r\n"
+        self.response += "\r\n"
         conn.send(self.response.encode())
