@@ -8,10 +8,8 @@ def siteHandler(conn):
     filetosend = open(path, "rb")
 
     data = filetosend.read(1024)
-    while data:
-        print("Sending main site...")
-        res = httpResponse(200, "text/html")
-        res.send(conn)
-        conn.sendall(data)
-        data = filetosend.read(1024)
+    print("Sending main site...")
+    res = httpResponse(200, "html")
+    res.send(conn)
+    conn.sendall(data)
     filetosend.close()

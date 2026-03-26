@@ -15,15 +15,15 @@ def staticHandler(requested, conn):
         filetosend = open(path, "rb")
     except OSError:
         print("Could not open/read file")
-        res = httpResponse(404, f"application/json")
+        res = httpResponse(404, "json")
         res.addConnection(0)
         res.send(conn)
 
     data = filetosend.read(1024)
+    res = httpResponse(200, requestedEx)
+    res.send(conn) 
     while data:
         print(f"Sending {requestedFile}...")
-        res = httpResponse(200, f"text/{requestedEx}")
-        res.send(conn)
         conn.sendall(data)
         data = filetosend.read(1024)
     filetosend.close()

@@ -1,8 +1,21 @@
+types = {
+    "html": "text/html",
+    "css": "text/css",
+    "js": "application/javascript",
+    "json": "application/json"
+}
+
+reasonPhrase = {
+    200: "Ok",
+    404: "Not Found",
+    500: "Internal server Error"
+}
+
 class httpResponse:
     def __init__(self, codeNum, contentType):
         self.codeNum = codeNum
         self.contentType = contentType
-        self.response = f"HTTP/1.1 {codeNum}\r\n" f"Content-Type: {contentType}\r\n"
+        self.response = f"HTTP/1.1 {codeNum} {reasonPhrase[codeNum]}\r\n" f"Content-Type: {types[contentType]}\r\n"
 
     def addConnection(self, connection):
         if connection == 0:

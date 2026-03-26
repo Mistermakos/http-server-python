@@ -4,7 +4,7 @@ from handlers.error import errorHandler
 from handlers.static import staticHandler
 from handlers.site import siteHandler
 
-TCP_IP_LOCAL = "127.0.0.1"
+TCP_IP_LOCAL = "0.0.0.0"
 PORT = 5000
 CONN_TUPLE = (TCP_IP_LOCAL, PORT)
 
@@ -19,10 +19,20 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         conn, address = s.accept()
         with conn:
             # reciving, decoding, taking important info
-            dataRaw = conn.recv(1024)
+            conn.settimeout(5)
+            try:
+                dataRaw = conn.recv(2048)
+            except socket.timeout:
+                continue
             dataDecoded = dataRaw.decode()
+            if(dataRaw == b''):
+                errorHandler(conn, 500)
+                conn.close()
+                continue
             requestMainData = dataDecoded.split("\r\n")[0].split(" ")
             requestType, requestPath, requestVersion = requestMainData[0:3]
+            
+            
             # Console report
             print(
                 "Server: Connected by: "
@@ -33,15 +43,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 + requestPath
             )
             # if data recived, pass it to handlers
+            print(requestPath)
             if dataRaw:
                 if requestPath.startswith("/api/v1"):
                     apiHandler(requestType, requestPath, conn)
                 elif requestPath.startswith("/static/"):
                     staticHandler(requestPath, conn)
-                elif requestPath == "/favicon.ico":
-                    errorHandler(conn)
                 elif requestPath == ("/"):
                     siteHandler(conn)
                 else:
                     print("Server: Error with receving data")
-                    errorHandler(conn)
+                    errorHandler(conn, 404)
