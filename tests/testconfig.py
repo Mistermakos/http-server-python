@@ -1,0 +1,1 @@
+#configurates so that I wouldn't have to start py server.py each time i want to test
