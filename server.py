@@ -25,11 +25,6 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             except socket.timeout:
                 continue
             dataDecoded = dataRaw.decode()
-            
-            if(len(str(dataDecoded)) < 3 or dataDecoded[0:3] != "HTTP"):
-                conn.send(dataRaw)
-                conn.close()
-                continue
             requestMainData = dataDecoded.split("\r\n")[0].split(" ")
             requestType, requestPath, requestVersion = requestMainData[0:3]
             
