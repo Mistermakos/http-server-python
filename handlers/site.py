@@ -2,7 +2,7 @@ import os
 from httpResponse import httpResponse
 
 
-def siteHandler(conn):
+def site_handler(conn):
     base_dir = os.path.dirname(__file__)
     path = os.path.join(base_dir, "../website/index.html")
     filetosend = open(path, "rb")

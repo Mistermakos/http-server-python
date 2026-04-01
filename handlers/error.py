@@ -1,7 +1,7 @@
 from httpResponse import httpResponse
 
 
-def errorHandler(conn, type):
+def error_handler(conn, type):
     res = httpResponse(type, "json")
     if(type == 404):
         print("Server: Responding Error 404")

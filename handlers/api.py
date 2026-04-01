@@ -2,7 +2,7 @@ import json
 from httpResponse import httpResponse
 
 
-def apiHandler(type, path, conn):
+def api_handler(type, path, conn):
     response_body = json.dumps({"DATA": [type, path]})
     res = httpResponse(200, "json")
     res.addConnection(0)
