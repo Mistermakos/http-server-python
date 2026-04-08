@@ -1,5 +1,5 @@
 import os
-from httpResponse import httpResponse
+from http_response import http_response
 
 
 def site_handler(conn):
@@ -9,7 +9,7 @@ def site_handler(conn):
 
     data = filetosend.read(1024)
     print("Sending main site...")
-    res = httpResponse(200, "html")
+    res = http_response(200, "html")
     res.send(conn)
     conn.sendall(data)
     filetosend.close()

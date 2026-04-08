@@ -11,7 +11,7 @@ reasonPhrase = {
     500: "Internal server Error"
 }
 
-class httpResponse:
+class http_response:
     def __init__(self, codeNum, contentType):
         self.codeNum = codeNum
         self.contentType = contentType
