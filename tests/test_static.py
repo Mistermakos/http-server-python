@@ -35,14 +35,27 @@ def test_handler_file_exists():
         mock_response.return_value = res_instance
 
         # when
-        static_handler("GET /index.html", conn)
+        static_handler("GET /static/index.html", conn)
 
         # then
         mock_response.assert_called_once_with(200, "html")
         res_instance.send.assert_called_once_with(conn)
         conn.sendall.assert_called_once_with(b"Hello world")
-        # res_instance.send.assert_called_once_with(conn)
-        # conn.sendall.assert_called_once_with(b"DATA")
 
 
-# def test_handler_file_not_existing():
+def test_handler_file_not_existing():
+    # given
+    conn = Mock()
+    with patch("handlers.static.parse_static_request", return_value=("", "")), patch(
+        "handlers.static.load_file", return_value=None
+    ), patch("handlers.static.http_response") as mock_response:
+
+        res_instance = Mock()
+        mock_response.return_value = res_instance
+
+        # when
+        static_handler("GET /static/", conn)
+
+        # then
+        mock_response.assert_called_once_with(404, "json")
+        res_instance.send.assert_called_once_with(conn)
