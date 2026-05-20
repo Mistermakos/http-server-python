@@ -18,7 +18,6 @@ The project was created to better understand:
 - Error handling
 - Docker support
 - Unit tests
-- Basic integration test
 
 ## Project structure
 
