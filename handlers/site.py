@@ -24,4 +24,3 @@ def site_handler(conn):
     res = http_response(200, "html")
     res.send(conn)
     conn.sendall(filetosend)
-    filetosend.close()

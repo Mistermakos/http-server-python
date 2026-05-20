@@ -3,10 +3,10 @@ from http_response import http_response
 
 
 def parse_static_request(requested):
-    requestedFile = requested.split("/")[2]  # name of file
+    requested_file = requested.split("/")[2]  # name of file
     # ex for file (needed for Content-Type in response)
-    requestedEx = requestedFile.split(".")[1]
-    return requestedEx, requestedFile
+    requested_ex = requested_file.split(".")[1]
+    return requested_ex, requested_file
 
 
 def load_file(file_name):

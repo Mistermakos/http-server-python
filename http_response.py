@@ -5,7 +5,7 @@ types = {
     "json": "application/json",
 }
 
-reasonPhrase = {200: "Ok", 404: "Not Found", 500: "Internal server Error"}
+reason_phrase = {200: "Ok", 404: "Not Found", 500: "Internal server Error"}
 
 
 class http_response:
@@ -13,7 +13,7 @@ class http_response:
         self.codeNum = codeNum
         self.contentType = contentType
         self.response = (
-            f"HTTP/1.1 {codeNum} {reasonPhrase[codeNum]}\r\n"
+            f"HTTP/1.1 {codeNum} {reason_phrase[codeNum]}\r\n"
             f"Content-Type: {types[contentType]}\r\n"
         )
 
